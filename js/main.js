@@ -9,18 +9,17 @@ const getRandomInt = (min, max) => {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 };
 
-const getRandomFloat = (min, max, signQuantity) => {
-  if(min < 0 || max < 0 || signQuantity < 0){
+const getRandomFloat = (min, max, decimalPlaces) => {
+  if(min < 0 || max < 0 || decimalPlaces < 0){
     throw 'Аргументы функции не могут быть меньше нуля.';
   }
   if(min >= max){
     throw 'Аргумент функции "min" не может быть больше или равен аргументу функции "max".';
   }
 
-  const randomResult = Math.random() * (max - min + 1) + min;
-
-  return randomResult.toFixed(signQuantity);
+  return Number((Math.random() * (max - min) + min).toFixed(decimalPlaces));
 };
 
-getRandomInt(15, 42);
-getRandomFloat(1.5, 4.2, 3);
+getRandomInt(33, 42);
+getRandomFloat(1.5, 4.2, 2);
+
