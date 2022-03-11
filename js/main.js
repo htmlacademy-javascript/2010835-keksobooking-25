@@ -1,3 +1,6 @@
-import {createAdvertisement, ADVERTISEMENTS_COUNT} from './data.js';
+import {cards} from './cards-generator.js';
 
-Array.from({length: ADVERTISEMENTS_COUNT}, createAdvertisement);
+const mapCanvas = document.querySelector('.map__canvas');
+mapCanvas.appendChild(cards[0]);
+
+
