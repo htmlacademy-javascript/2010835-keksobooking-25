@@ -1,26 +1,19 @@
-import {createAdvertisement, ADVERTISEMENTS_COUNT} from './data.js';
-
 const template = document.querySelector('#card').content;
 const cardTemplate = template.querySelector('.popup');
 
-const randomAdvertisements = Array.from({length: ADVERTISEMENTS_COUNT}, createAdvertisement);
-
-const translateTypeFromEngToRus = (type) => {
-  switch(type){
-    case 'flat':
-      return 'Квартира';
-    case 'bungalow':
-      return 'Бунгало';
-    case 'house':
-      return 'Дом';
-    case 'palace':
-      return 'Дворец';
-    case 'hotel':
-      return 'Отель ';
-  }
+const typeFromEngToRusDictionary = {
+  flat: 'Квартира',
+  bungalow: 'Бунгало',
+  house: 'Дом',
+  palace: 'Дворец',
+  hotel: 'Отель',
 };
 
 const createPhotosFragment = (srcList, imgTemplate) => {
+  if(srcList.length <= 0){
+    return null;
+  }
+
   const _popupPhotosFragment = document.createDocumentFragment();
 
   srcList.forEach((src) => {
@@ -33,6 +26,10 @@ const createPhotosFragment = (srcList, imgTemplate) => {
 };
 
 const createFeaturesFragment  = (features, featuresAvailable) => {
+  if(featuresAvailable.length <= 0){
+    return null;
+  }
+
   const featuresFragment = document.createDocumentFragment();
 
   features.forEach((featureItem) => {
@@ -48,30 +45,59 @@ const createFeaturesFragment  = (features, featuresAvailable) => {
   return featuresFragment;
 };
 
-const cards = randomAdvertisements.map((advertisement) => {
-  const cardElement = cardTemplate.cloneNode(true);
+const setHidden = (element) => {
+  element.classList.add('hidden');
 
-  cardElement.querySelector('.popup__title').textContent = advertisement.offer.title;
-  cardElement.querySelector('.popup__text--address').textContent = advertisement.offer.address;
-  cardElement.querySelector('.popup__text--price').textContent = `${String(advertisement.offer.price)} ₽/ночь`;
-  cardElement.querySelector('.popup__type').textContent = translateTypeFromEngToRus(advertisement.offer.type);
-  cardElement.querySelector('.popup__text--capacity').textContent = `${advertisement.offer.rooms} комнаты для ${advertisement.offer.guests} гостей`;
-  cardElement.querySelector('.popup__text--time').textContent = `Заезд после ${advertisement.offer.checkin}, выезд до ${advertisement.offer.checkout}`;
-
-  const popupPhotosElement = cardElement.querySelector('.popup__photos');
-  const photoElement = cardElement.querySelector('.popup__photo');
-  popupPhotosElement.innerHTML  = '';
-  popupPhotosElement.append(createPhotosFragment(advertisement.offer.photos, photoElement));
-
-  const popupFeaturesElement = cardElement.querySelector('.popup__features');
-  const features = cardElement.querySelectorAll('.popup__feature');
-  popupFeaturesElement.innerHTML = '';
-  popupFeaturesElement.append(createFeaturesFragment(features, advertisement.offer.features));
-
-  cardElement.querySelector('.popup__description').textContent = advertisement.offer.description;
-
-  return cardElement;
-});
+  return element;
+};
 
 
-export {cards};
+const createRandomAdvertisementsCards = (randomAdvertisements) => {
+  const cards = randomAdvertisements.map((advertisement) => {
+    const cardElement = cardTemplate.cloneNode(true);
+
+    let element = cardElement.querySelector('.popup__avatar');
+    advertisement.author.avatar ? element.src = advertisement.author.avatar : setHidden(element);
+
+    element = cardElement.querySelector('.popup__title');
+    advertisement.offer.title ? element.textContent = advertisement.offer.title : setHidden(element);
+
+    element = cardElement.querySelector('.popup__text--address');
+    advertisement.offer.address ? element.textContent = advertisement.offer.address : setHidden(element);
+
+    element = cardElement.querySelector('.popup__text--price');
+    advertisement.offer.price ? element.textContent = `${String(advertisement.offer.price)} ₽/ночь` : setHidden(element);
+
+    element = cardElement.querySelector('.popup__type');
+    advertisement.offer.type ? element.textContent = typeFromEngToRusDictionary[advertisement.offer.type] : setHidden(element);
+
+    element = cardElement.querySelector('.popup__text--capacity');
+    advertisement.offer.rooms && advertisement.offer.guests ? element.textContent = `${advertisement.offer.rooms} комнаты для ${advertisement.offer.guests} гостей` : setHidden(element);
+
+    element = cardElement.querySelector('.popup__text--time');
+    advertisement.offer.checkin && advertisement.offer.checkout ?
+    element.textContent = `Заезд после ${advertisement.offer.checkin}, выезд до ${advertisement.offer.checkout}` :
+    setHidden(element);
+
+    const popupPhotosElement = cardElement.querySelector('.popup__photos');
+    const photoElement = cardElement.querySelector('.popup__photo');
+    const photosFragment = createPhotosFragment(advertisement.offer.photos, photoElement);
+    popupPhotosElement.innerHTML = '';
+    photosFragment ? popupPhotosElement.append(photosFragment) : setHidden(popupPhotosElement);
+
+    const popupFeaturesElement = cardElement.querySelector('.popup__features');
+    const features = cardElement.querySelectorAll('.popup__feature');
+    const featuresFragment = createFeaturesFragment(features, advertisement.offer.features);
+    popupFeaturesElement.innerHTML = '';
+    featuresFragment ? popupFeaturesElement.append(featuresFragment) : setHidden(popupFeaturesElement);
+
+    cardElement.querySelector('.popup__description').textContent = advertisement.offer.description;
+
+    return cardElement;
+  });
+
+  return cards;
+};
+
+
+export {createRandomAdvertisementsCards};
