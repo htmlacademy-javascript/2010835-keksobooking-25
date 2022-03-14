@@ -56,42 +56,101 @@ const createRandomAdvertisementsCards = (randomAdvertisements) => {
   const cards = randomAdvertisements.map((advertisement) => {
     const cardElement = cardTemplate.cloneNode(true);
 
+    //SET AVATAR
     let element = cardElement.querySelector('.popup__avatar');
-    advertisement.author.avatar ? element.src = advertisement.author.avatar : setHidden(element);
+    if(advertisement.author.avatar){
+      element.src = advertisement.author.avatar;
+    }
+    else{
+      setHidden(element);
+    }
 
+    //SET TITLE
     element = cardElement.querySelector('.popup__title');
-    advertisement.offer.title ? element.textContent = advertisement.offer.title : setHidden(element);
+    if(advertisement.offer.title){
+      element.textContent = advertisement.offer.title;
+    }
+    else{
+      setHidden(element);
+    }
 
+    //SET ADDRESS
     element = cardElement.querySelector('.popup__text--address');
-    advertisement.offer.address ? element.textContent = advertisement.offer.address : setHidden(element);
+    if(advertisement.offer.address){
+      element.textContent = advertisement.offer.address;
+    }
+    else{
+      setHidden(element);
+    }
 
+    //SET PRICE
     element = cardElement.querySelector('.popup__text--price');
-    advertisement.offer.price ? element.textContent = `${String(advertisement.offer.price)} ₽/ночь` : setHidden(element);
+    if(advertisement.offer.price){
+      element.textContent = `${String(advertisement.offer.price)} ₽/ночь`;
+    }
+    else{
+      setHidden(element);
+    }
 
+    //SET TYPE
     element = cardElement.querySelector('.popup__type');
-    advertisement.offer.type ? element.textContent = typeFromEngToRusDictionary[advertisement.offer.type] : setHidden(element);
+    if(advertisement.offer.type){
+      element.textContent = typeFromEngToRusDictionary[advertisement.offer.type];
+    }
+    else{
+      setHidden(element);
+    }
 
+    //SET CAPACITY
     element = cardElement.querySelector('.popup__text--capacity');
-    advertisement.offer.rooms && advertisement.offer.guests ? element.textContent = `${advertisement.offer.rooms} комнаты для ${advertisement.offer.guests} гостей` : setHidden(element);
+    if(advertisement.offer.rooms && advertisement.offer.guests){
+      element.textContent = `${advertisement.offer.rooms} комнаты для ${advertisement.offer.guests} гостей`;
+    }
+    else{
+      setHidden(element);
+    }
 
+    //SET TIME
     element = cardElement.querySelector('.popup__text--time');
-    advertisement.offer.checkin && advertisement.offer.checkout ?
-    element.textContent = `Заезд после ${advertisement.offer.checkin}, выезд до ${advertisement.offer.checkout}` :
-    setHidden(element);
+    if(advertisement.offer.checkin && advertisement.offer.checkout){
+      element.textContent = `Заезд после ${advertisement.offer.checkin}, выезд до ${advertisement.offer.checkout}`;
+    }
+    else{
+      setHidden(element);
+    }
 
+    //SET PHOTOS
     const popupPhotosElement = cardElement.querySelector('.popup__photos');
     const photoElement = cardElement.querySelector('.popup__photo');
     const photosFragment = createPhotosFragment(advertisement.offer.photos, photoElement);
     popupPhotosElement.innerHTML = '';
-    photosFragment ? popupPhotosElement.append(photosFragment) : setHidden(popupPhotosElement);
+    if(photosFragment){
+      popupPhotosElement.append(photosFragment);
+    }
+    else{
+      setHidden(popupPhotosElement);
+    }
 
+    //SET FEATURES
     const popupFeaturesElement = cardElement.querySelector('.popup__features');
     const features = cardElement.querySelectorAll('.popup__feature');
     const featuresFragment = createFeaturesFragment(features, advertisement.offer.features);
     popupFeaturesElement.innerHTML = '';
-    featuresFragment ? popupFeaturesElement.append(featuresFragment) : setHidden(popupFeaturesElement);
+    if(featuresFragment){
+      popupFeaturesElement.append(featuresFragment);
+    }
+    else{
+      setHidden(popupFeaturesElement);
+    }
 
-    cardElement.querySelector('.popup__description').textContent = advertisement.offer.description;
+    //SET DESCRIPTION
+    element = cardElement.querySelector('.popup__description');
+    if(advertisement.offer.description){
+      element.textContent = advertisement.offer.description;
+    }
+    else{
+      setHidden(element);
+    }
 
     return cardElement;
   });
