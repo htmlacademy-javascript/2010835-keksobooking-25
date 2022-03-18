@@ -24,10 +24,7 @@ const pristine = new Pristine(form, {
 
 
 //PRICE VALIDATION
-const validatePriceMaxValue = (value) => Number(value) <= 100000;
 const validatePriceMinValue = (value) => value >= typePriceDictionary[typeSelector.value];
-
-pristine.addValidator(price, validatePriceMaxValue, 'Максимальное значение 100 000');
 pristine.addValidator(price, validatePriceMinValue, 'Цена ниже допустимой для данного типа жилья');
 
 
@@ -44,7 +41,7 @@ const validateAvailableCapacityByRoomNumber = () => {
   return false;
 };
 
-pristine.addValidator(capacitySelector, validateAvailableCapacityByRoomNumber, 'Недопустимое количество гостей при заданном количистве комнат');
+pristine.addValidator(capacitySelector, validateAvailableCapacityByRoomNumber, 'Недопустимое количество гостей при заданном количестве комнат');
 
 
 //FORM LISTENERS
