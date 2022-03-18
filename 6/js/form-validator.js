@@ -46,9 +46,11 @@ pristine.addValidator(capacitySelector, validateAvailableCapacityByRoomNumber, '
 
 //FORM LISTENERS
 form.addEventListener('submit', (evt) => {
-  evt.preventDefault();
+  const isValid = pristine.validate();
 
-  pristine.validate();
+  if(!isValid){
+    evt.preventDefault();
+  }
 });
 
 roomNumberSelector.addEventListener('change', () => {
