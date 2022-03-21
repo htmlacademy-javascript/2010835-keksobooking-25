@@ -1053,3 +1053,18 @@ fieldset {
 .hidden {
   display: none;
 }
+
+.ad-form__error{
+  margin-top: 4px;
+  color: red;
+}
+
+#address:focus{
+  border: 1px solid #d9d9d3;
+  -webkit-box-shadow: 0 0 0px 0px;
+          box-shadow: 0 0 0px 0px;
+}
+
+#address:hover{
+  border: 1px solid #d9d9d3;
+}
