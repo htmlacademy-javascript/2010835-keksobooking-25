@@ -23,7 +23,7 @@ const createMap = (onMapLoad) => {
     .setView({
       lat: initialLocation.lat,
       lng: initialLocation.lng,
-    }, 12);
+    }, 13);
 
   L.tileLayer(
     'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',

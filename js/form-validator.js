@@ -25,7 +25,8 @@ const pristine = new Pristine(form, {
 
 //PRICE VALIDATION
 const validatePriceMinValue = (value) => value >= typePriceDictionary[typeSelector.value];
-pristine.addValidator(price, validatePriceMinValue, 'Цена ниже допустимой для данного типа жилья');
+const priceValidationMessage = () => `Для данного типа жилья цена не должна быть ниже ${typePriceDictionary[typeSelector.value]}`;
+pristine.addValidator(price, validatePriceMinValue, priceValidationMessage);
 
 
 //CAPACITY VALIDATION

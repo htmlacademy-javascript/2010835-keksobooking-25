@@ -1,9 +1,11 @@
 import'./form-validator.js';
 import'./map-creator.js';
+import'./price-slider.js';
 import {generateRandomAdvertisementsData} from './data.js';
 import {createRandomAdvertisementCard} from './cards-generator.js';
 import { deactivateForm, activateForm } from './form-activity-switcher.js';
 import {addMainMarker, addMarker, createMap} from './map-creator.js';
+import { initPriceSlider } from './price-slider.js';
 
 const addAdvertisementsMarkers = (_randomData, _map) => {
   _randomData.forEach((element) => {
@@ -18,6 +20,16 @@ const markerMoveEndHandler = (evt) => {
 };
 
 deactivateForm();
+
+const priceInput = document.querySelector('#price');
+initPriceSlider({
+  inputField: priceInput,
+  min: 0,
+  max: 100000,
+  start: 0,
+  step: 1,
+  connect: 'lower',
+});
 
 const randomData = generateRandomAdvertisementsData();
 
