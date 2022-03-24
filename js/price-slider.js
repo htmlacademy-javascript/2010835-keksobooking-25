@@ -23,6 +23,10 @@ const initPriceSlider = (sliderConfigData) => {
   priceSlider.noUiSlider.on('update', () => {
     sliderConfigData.inputField.value = priceSlider.noUiSlider.get();
   });
+
+  sliderConfigData.inputField.addEventListener('input', () => {
+    priceSlider.noUiSlider.set(sliderConfigData.inputField.value);
+  });
 };
 
 export {initPriceSlider};
