@@ -24,11 +24,6 @@ deactivateForm();
 const priceInput = document.querySelector('#price');
 initPriceSlider({
   inputField: priceInput,
-  min: 0,
-  max: 100000,
-  start: 0,
-  step: 1,
-  connect: 'lower',
 });
 
 const randomData = generateRandomAdvertisementsData();
