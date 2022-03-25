@@ -3,6 +3,8 @@ const price = form.querySelector('#price');
 const roomNumberSelector = form.querySelector('#room_number');
 const capacitySelector = form.querySelector('#capacity');
 const typeSelector = form.querySelector('#type');
+const timeInSelector = form.querySelector('#timein');
+const timeOutSelector = form.querySelector('#timeout');
 
 const typePriceDictionary = {
   bungalow: 0,
@@ -24,8 +26,12 @@ const pristine = new Pristine(form, {
 
 
 //PRICE VALIDATION
-const validatePriceMinValue = (value) => value >= typePriceDictionary[typeSelector.value];
-pristine.addValidator(price, validatePriceMinValue, 'Цена ниже допустимой для данного типа жилья');
+const validatePriceMinValue = (value) => {
+  price.min = typePriceDictionary[typeSelector.value];
+  return value >= price.min;
+};
+const priceValidationMessage = () => `Минимальное значение поля ${typePriceDictionary[typeSelector.value]}`;
+pristine.addValidator(price, validatePriceMinValue, priceValidationMessage, 10, true);
 
 
 //CAPACITY VALIDATION
@@ -44,6 +50,16 @@ const validateAvailableCapacityByRoomNumber = () => {
 pristine.addValidator(capacitySelector, validateAvailableCapacityByRoomNumber, 'Недопустимое количество гостей при заданном количестве комнат');
 
 
+//TIMEIN TIMEOUT SELECTORS LISTENERS
+timeInSelector.addEventListener('change', () => {
+  timeOutSelector.selectedIndex = timeInSelector.selectedIndex;
+});
+
+timeOutSelector.addEventListener('change', () => {
+  timeInSelector.selectedIndex = timeOutSelector.selectedIndex;
+});
+
+
 //FORM LISTENERS
 form.addEventListener('submit', (evt) => {
   const isValid = pristine.validate();
@@ -59,6 +75,8 @@ roomNumberSelector.addEventListener('change', () => {
 
 typeSelector.addEventListener('change', () => {
   price.placeholder = typePriceDictionary[typeSelector.value];
+  price.min = typePriceDictionary[typeSelector.value];
   pristine.validate();
 });
+
 
