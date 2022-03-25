@@ -28,7 +28,8 @@ const pristine = new Pristine(form, {
 //PRICE VALIDATION
 const validatePriceMinValue = (value) => {
   price.min = typePriceDictionary[typeSelector.value];
-  return value >= price.min;
+
+  return +value >= +price.min;
 };
 const priceValidationMessage = () => `Минимальное значение поля ${typePriceDictionary[typeSelector.value]}`;
 pristine.addValidator(price, validatePriceMinValue, priceValidationMessage, 10, true);
