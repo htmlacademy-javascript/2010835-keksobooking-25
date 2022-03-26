@@ -1,13 +1,10 @@
-import {createAdvertisement, ADVERTISEMENTS_COUNT} from './data.js';
-import {createRandomAdvertisementsCards} from './cards-generator.js';
-import'./form-validator.js';
-import {deactivateForm, activateForm} from './form-activity-switcher.js';
+import { adFormInit } from './ad-form.js';
+import { generateRandomAdvertisementsData } from './data.js';
+import { userControlOff, userControlOn } from './user-control-on-off-switcher.js';
+import { mapInit } from './map-creator.js';
 
-deactivateForm();
+userControlOff();
 
-const randomAdvertisementsCards = createRandomAdvertisementsCards(Array.from({length: ADVERTISEMENTS_COUNT}, createAdvertisement));
+adFormInit();
 
-const mapCanvas = document.querySelector('.map__canvas');
-mapCanvas.appendChild(randomAdvertisementsCards[0]);
-
-activateForm();
+mapInit(generateRandomAdvertisementsData(), userControlOn);

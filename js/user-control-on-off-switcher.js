@@ -5,7 +5,7 @@ const mapFiltersForm = document.querySelector('.map__filters');
 const mapFiltersFormChildren = mapFiltersForm.children;
 
 //SET ACTIVE PAGE STATE
-const activateForm = () => {
+const userControlOn = () => {
   for(let i = 0; i < adFormchildren.length; i++){
     adFormchildren[i]['disabled'] = false;
   }
@@ -19,7 +19,7 @@ const activateForm = () => {
 };
 
 //SET INACTIVE PAGE STATE
-const deactivateForm = () => {
+const userControlOff = () => {
   for(let i = 0; i < adFormchildren.length; i++){
     adFormchildren[i]['disabled'] = true;
   }
@@ -33,4 +33,4 @@ const deactivateForm = () => {
 };
 
 
-export {activateForm, deactivateForm};
+export {userControlOn, userControlOff};

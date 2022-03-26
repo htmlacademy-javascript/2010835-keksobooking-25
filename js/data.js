@@ -55,6 +55,8 @@ const createAdvertisement = (element, index) => {
   };
 };
 
-export {createAdvertisement};
+const generateRandomAdvertisementsData = () => Array.from({length: ADVERTISEMENTS_COUNT}, createAdvertisement);
+
+export {generateRandomAdvertisementsData};
 export {ADVERTISEMENTS_COUNT};
 
