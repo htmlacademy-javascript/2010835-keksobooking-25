@@ -1,17 +1,22 @@
 import { INITIAL_LOCATION } from './initial-location.js';
 import { createRandomAdvertisementCard } from './cards-generator.js';
 
+const MARKER_ICON_WIDTH = 40;
+const MARKER_ICON_HEIGHT = 40;
+const MAIN_MARKER_ICON_HEIGHT = 52;
+const MAINMARKER_ICON_HEIGHT = 52;
+
 //СОЗДАЁМ ИКОНКИ МАРКЕРОВ КАРТЫ
 const markerIcon = L.icon({
   iconUrl: '../img/pin.svg',
-  iconSize: [52, 52],
-  iconAnchor: [26, 52],
+  iconSize: [MARKER_ICON_WIDTH, MARKER_ICON_HEIGHT],
+  iconAnchor: [MARKER_ICON_WIDTH/2, MARKER_ICON_HEIGHT],
 });
 
 const mainMarkerIcon = L.icon({
   iconUrl: '../img/main-pin.svg',
-  iconSize: [52, 52],
-  iconAnchor: [26, 52],
+  iconSize: [MAINMARKER_ICON_HEIGHT, MAIN_MARKER_ICON_HEIGHT],
+  iconAnchor: [MAINMARKER_ICON_HEIGHT/2, MAIN_MARKER_ICON_HEIGHT],
 });
 
 const markerMoveEndHandler = (evt) => {
