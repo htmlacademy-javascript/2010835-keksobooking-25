@@ -8,13 +8,13 @@ const MAINMARKER_ICON_HEIGHT = 52;
 
 //СОЗДАЁМ ИКОНКИ МАРКЕРОВ КАРТЫ
 const markerIcon = L.icon({
-  iconUrl: '../img/pin.svg',
+  iconUrl: 'img/pin.svg',
   iconSize: [MARKER_ICON_WIDTH, MARKER_ICON_HEIGHT],
   iconAnchor: [MARKER_ICON_WIDTH/2, MARKER_ICON_HEIGHT],
 });
 
 const mainMarkerIcon = L.icon({
-  iconUrl: '../img/main-pin.svg',
+  iconUrl: 'img/main-pin.svg',
   iconSize: [MAINMARKER_ICON_HEIGHT, MAIN_MARKER_ICON_HEIGHT],
   iconAnchor: [MAINMARKER_ICON_HEIGHT/2, MAIN_MARKER_ICON_HEIGHT],
 });
@@ -65,7 +65,7 @@ const addMarker = (location, map, popupTemplate) => {
 //ДОБАВЛЯЕМ МАРКЕРЫ НА КАРТУ
 const addAdvertisementsMarkers = (_data, _map) => {
   _data.forEach((element) => {
-    addMarker({lat: element.location.lat, lng: element.location.lng}, _map, createRandomAdvertisementCard(element)); //Сюда передавать уже массив с разметкой
+    addMarker({lat: element.location.lat, lng: element.location.lng}, _map, createRandomAdvertisementCard(element));
   });
 };
 
