@@ -1,20 +1,21 @@
-import { INITIAL_LOCATION } from './initial-location.js';
+import { INITIAL_LOCATION } from './global-constants.js';
 import { createRandomAdvertisementCard } from './cards-generator.js';
 
 const MARKER_ICON_WIDTH = 40;
 const MARKER_ICON_HEIGHT = 40;
 const MAIN_MARKER_ICON_HEIGHT = 52;
 const MAINMARKER_ICON_HEIGHT = 52;
+const MAX_DISPLAYED_COUNT = 10;
 
 //СОЗДАЁМ ИКОНКИ МАРКЕРОВ КАРТЫ
 const markerIcon = L.icon({
-  iconUrl: '../img/pin.svg',
+  iconUrl: 'img/pin.svg',
   iconSize: [MARKER_ICON_WIDTH, MARKER_ICON_HEIGHT],
   iconAnchor: [MARKER_ICON_WIDTH/2, MARKER_ICON_HEIGHT],
 });
 
 const mainMarkerIcon = L.icon({
-  iconUrl: '../img/main-pin.svg',
+  iconUrl: 'img/main-pin.svg',
   iconSize: [MAINMARKER_ICON_HEIGHT, MAIN_MARKER_ICON_HEIGHT],
   iconAnchor: [MAINMARKER_ICON_HEIGHT/2, MAIN_MARKER_ICON_HEIGHT],
 });
@@ -58,21 +59,19 @@ const addMarker = (location, map, popupTemplate) => {
   );
 
   marker.addTo(map).bindPopup(popupTemplate);
-
-  return marker;
 };
 
 //ДОБАВЛЯЕМ МАРКЕРЫ НА КАРТУ
-const addAdvertisementsMarkers = (_data, _map) => {
-  _data.forEach((element) => {
-    addMarker({lat: element.location.lat, lng: element.location.lng}, _map, createRandomAdvertisementCard(element)); //Сюда передавать уже массив с разметкой
-  });
+const addAdvertisementsMarkers = (data, map) => {
+  for(let i = 0; i < MAX_DISPLAYED_COUNT; i++){
+    addMarker({lat: data[i].location.lat, lng: data[i].location.lng}, map, createRandomAdvertisementCard( data[i]));
+  }
 };
 
-const markersInit = (_data, _map) => {
-  const mainMarker = addMainMarker(_map);
+const markersInit = (data, map) => {
+  const mainMarker = addMainMarker(map);
   mainMarker.on('moveend', markerMoveEndHandler);
-  addAdvertisementsMarkers(_data, _map);
+  addAdvertisementsMarkers(data, map);
 };
 
 export {markersInit};

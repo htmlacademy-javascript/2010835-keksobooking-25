@@ -1,15 +1,15 @@
 import { markersInit } from './marker-creator.js';
-import { INITIAL_LOCATION } from './initial-location.js';
+import { INITIAL_LOCATION } from './global-constants.js';
+
+const ZOOM_LEVEL = 13;
 
 const createMap = (onMapLoad) => {
   const map = L.map('map-canvas')
-    .on('load', () => {
-      onMapLoad();
-    })
+    .on('load', onMapLoad)
     .setView({
       lat: INITIAL_LOCATION.lat,
       lng: INITIAL_LOCATION.lng,
-    }, 13);
+    }, ZOOM_LEVEL);
 
   L.tileLayer(
     'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',

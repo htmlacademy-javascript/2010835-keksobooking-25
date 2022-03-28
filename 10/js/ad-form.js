@@ -1,6 +1,6 @@
 import'./ad-form-validator.js';
 import {initPriceSlider} from './price-slider.js';
-import { INITIAL_LOCATION } from './initial-location.js';
+import { INITIAL_LOCATION } from './global-constants.js';
 
 const priceInput = document.querySelector('#price');
 const adressInput = document.querySelector('#address');
