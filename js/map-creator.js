@@ -1,5 +1,5 @@
 import { markersInit } from './marker-creator.js';
-import { INITIAL_LOCATION } from './initial-location.js';
+import { INITIAL_LOCATION } from './global-constants.js';
 
 const ZOOM_LEVEL = 13;
 

@@ -1,4 +1,4 @@
-import { INITIAL_LOCATION } from './initial-location.js';
+import { INITIAL_LOCATION } from './global-constants.js';
 import { createRandomAdvertisementCard } from './cards-generator.js';
 
 const MARKER_ICON_WIDTH = 40;
