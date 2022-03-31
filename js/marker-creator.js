@@ -26,25 +26,28 @@ const markerMoveEndHandler = (evt) => {
   adressInput.value = address;
 };
 
-//ФУНКЦИЯ СОЗДАЮЩАЯ ЭКЗЕМПЛЯР ГЛАВНОГО МАРКЕРА
-const addMainMarker = (map) => {
-  const marker = L.marker(
+//ФУНКЦИЯ СОЗДАЮЩАЯ ГЛАВНЫЙ МАРКЕР
+const mainMarker = L.marker(
+  {
+    lat: INITIAL_LOCATION.lat,
+    lng: INITIAL_LOCATION.lng,
+  },
+  {
+    draggable: true,
+    icon: mainMarkerIcon,
+  }
+);
+
+const resetMainMarker = () => {
+  mainMarker.setLatLng(
     {
       lat: INITIAL_LOCATION.lat,
       lng: INITIAL_LOCATION.lng,
-    },
-    {
-      draggable: true,
-      icon: mainMarkerIcon,
     }
   );
-
-  marker.addTo(map);
-
-  return marker;
 };
 
-//ФУНКЦИЯ ДЛЯ СОЗДАНИЯ ЭКЗЕМПЛЯРА МАРКЕРА
+//ФУНКЦИЯ ДЛЯ СОЗДАНИЯ МАРКЕРА ОБЪЯВЛЕНИЯ
 const addMarker = (location, map, popupTemplate) => {
 
   const marker = L.marker(
@@ -68,10 +71,11 @@ const addAdvertisementsMarkers = (data, map) => {
   }
 };
 
-const markersInit = (data, map) => {
-  const mainMarker = addMainMarker(map);
+const markersInit = (data, markersLayer) => {
+  mainMarker.addTo(markersLayer);
+  resetMainMarker();
   mainMarker.on('moveend', markerMoveEndHandler);
-  addAdvertisementsMarkers(data, map);
+  addAdvertisementsMarkers(data, markersLayer);
 };
 
 export {markersInit};
