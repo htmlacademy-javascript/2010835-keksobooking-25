@@ -39,7 +39,7 @@ const initPriceSlider = (sliderConfigData) => {
     sliderConfigData.inputField.value = priceSlider.noUiSlider.get();
   });
 
-  sliderConfigData.inputField.addEventListener('change', () => {
+  sliderConfigData.inputField.addEventListener('input', () => {
     priceSlider.noUiSlider.set(sliderConfigData.inputField.value);
   });
 };

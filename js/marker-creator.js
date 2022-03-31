@@ -26,7 +26,7 @@ const markerMoveEndHandler = (evt) => {
   adressInput.value = address;
 };
 
-//ФУНКЦИЯ СОЗДАЮЩАЯ ГЛАВНЫЙ МАРКЕР
+//СОЗДАЁМ ГЛАВНЫЙ МАРКЕР
 const mainMarker = L.marker(
   {
     lat: INITIAL_LOCATION.lat,
