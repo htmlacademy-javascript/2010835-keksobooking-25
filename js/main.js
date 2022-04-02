@@ -9,13 +9,14 @@ filterFormDisable();
 
 adFormInit(resetMap);
 
-createMap(() => {
-  adFormEnable();
-});
-
 const onSuccess = (data) => {
   filterFormEnable();
   createAdMarkers(data);
 };
 
-requestData(onSuccess);
+createMap(() => {
+  adFormEnable();
+  requestData(onSuccess);
+});
+
+
