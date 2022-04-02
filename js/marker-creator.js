@@ -7,6 +7,8 @@ const MAIN_MARKER_ICON_HEIGHT = 52;
 const MAINMARKER_ICON_HEIGHT = 52;
 const MAX_DISPLAYED_COUNT = 10;
 
+let _data = null;
+
 //СОЗДАЁМ ИКОНКИ МАРКЕРОВ КАРТЫ
 const markerIcon = L.icon({
   iconUrl: 'img/pin.svg',
@@ -27,16 +29,24 @@ const markerMoveEndHandler = (evt) => {
 };
 
 //СОЗДАЁМ ГЛАВНЫЙ МАРКЕР
-const mainMarker = L.marker(
-  {
-    lat: INITIAL_LOCATION.lat,
-    lng: INITIAL_LOCATION.lng,
-  },
-  {
-    draggable: true,
-    icon: mainMarkerIcon,
-  }
-);
+let mainMarker = null;
+
+const createMainMarker = (map) => {
+  mainMarker = L.marker(
+    {
+      lat: INITIAL_LOCATION.lat,
+      lng: INITIAL_LOCATION.lng,
+    },
+    {
+      draggable: true,
+      icon: mainMarkerIcon,
+    }
+  );
+
+  mainMarker.on('moveend', markerMoveEndHandler);
+
+  mainMarker.addTo(map);
+};
 
 const resetMainMarker = () => {
   mainMarker.setLatLng(
@@ -65,17 +75,16 @@ const addMarker = (location, map, popupTemplate) => {
 };
 
 //ДОБАВЛЯЕМ МАРКЕРЫ НА КАРТУ
-const addAdvertisementsMarkers = (data, map) => {
-  for(let i = 0; i < MAX_DISPLAYED_COUNT; i++){
-    addMarker({lat: data[i].location.lat, lng: data[i].location.lng}, map, createRandomAdvertisementCard( data[i]));
+const addAdvertisementsMarkers = (map, data) => {
+  if(_data === null){
+    _data = data;
+  }
+  if(_data){
+    for(let i = 0; i < MAX_DISPLAYED_COUNT; i++){
+      addMarker({lat: _data[i].location.lat, lng: _data[i].location.lng}, map, createRandomAdvertisementCard( _data[i]));
+    }
   }
 };
 
-const markersInit = (data, markersLayer) => {
-  mainMarker.addTo(markersLayer);
-  resetMainMarker();
-  mainMarker.on('moveend', markerMoveEndHandler);
-  addAdvertisementsMarkers(data, markersLayer);
-};
 
-export {markersInit};
+export {createMainMarker, resetMainMarker, addAdvertisementsMarkers};
