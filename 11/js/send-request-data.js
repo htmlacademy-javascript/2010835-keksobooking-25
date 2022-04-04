@@ -13,7 +13,15 @@ const requestData = (onSuccess)  => {
       throw new Error(`${response.status} ${response.statusText}`);
     })
     .then((data) => {
-      onSuccess(data);
+      if(data && data.length > 0){
+        onSuccess(data);
+      }
+      else{
+        throw new Error('Данные полученные с сервера не валидны');
+      }
+    })
+    .catch((error) => {
+      throw error.message;
     });
 };
 
@@ -23,7 +31,8 @@ const sendData = (data, onSuccess, onError) => {
     {
       method: 'POST',
       body: data,
-    })
+    }
+  )
     .then((response) => {
       if(response.ok){
         onSuccess();
@@ -31,6 +40,10 @@ const sendData = (data, onSuccess, onError) => {
       else{
         onError();
       }
+    })
+    .catch((error) => {
+      onError();
+      throw error.message;
     });
 };
 
