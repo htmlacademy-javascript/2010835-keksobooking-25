@@ -7,6 +7,8 @@ const MAIN_MARKER_ICON_HEIGHT = 52;
 const MAINMARKER_ICON_HEIGHT = 52;
 const MAX_DISPLAYED_COUNT = 10;
 
+let _data = null;
+
 //СОЗДАЁМ ИКОНКИ МАРКЕРОВ КАРТЫ
 const markerIcon = L.icon({
   iconUrl: 'img/pin.svg',
@@ -26,9 +28,11 @@ const markerMoveEndHandler = (evt) => {
   adressInput.value = address;
 };
 
-//ФУНКЦИЯ СОЗДАЮЩАЯ ЭКЗЕМПЛЯР ГЛАВНОГО МАРКЕРА
-const addMainMarker = (map) => {
-  const marker = L.marker(
+//СОЗДАЁМ ГЛАВНЫЙ МАРКЕР
+let mainMarker = null;
+
+const createMainMarker = (map) => {
+  mainMarker = L.marker(
     {
       lat: INITIAL_LOCATION.lat,
       lng: INITIAL_LOCATION.lng,
@@ -39,12 +43,21 @@ const addMainMarker = (map) => {
     }
   );
 
-  marker.addTo(map);
+  mainMarker.on('moveend', markerMoveEndHandler);
 
-  return marker;
+  mainMarker.addTo(map);
 };
 
-//ФУНКЦИЯ ДЛЯ СОЗДАНИЯ ЭКЗЕМПЛЯРА МАРКЕРА
+const resetMainMarker = () => {
+  mainMarker.setLatLng(
+    {
+      lat: INITIAL_LOCATION.lat,
+      lng: INITIAL_LOCATION.lng,
+    }
+  );
+};
+
+//ФУНКЦИЯ ДЛЯ СОЗДАНИЯ МАРКЕРА ОБЪЯВЛЕНИЯ
 const addMarker = (location, map, popupTemplate) => {
 
   const marker = L.marker(
@@ -62,16 +75,16 @@ const addMarker = (location, map, popupTemplate) => {
 };
 
 //ДОБАВЛЯЕМ МАРКЕРЫ НА КАРТУ
-const addAdvertisementsMarkers = (data, map) => {
-  for(let i = 0; i < MAX_DISPLAYED_COUNT; i++){
-    addMarker({lat: data[i].location.lat, lng: data[i].location.lng}, map, createRandomAdvertisementCard( data[i]));
+const addAdvertisementsMarkers = (map, data) => {
+  if(_data === null){
+    _data = data;
+  }
+  if(_data){
+    for(let i = 0; i < MAX_DISPLAYED_COUNT; i++){
+      addMarker({lat: _data[i].location.lat, lng: _data[i].location.lng}, map, createRandomAdvertisementCard( _data[i]));
+    }
   }
 };
 
-const markersInit = (data, map) => {
-  const mainMarker = addMainMarker(map);
-  mainMarker.on('moveend', markerMoveEndHandler);
-  addAdvertisementsMarkers(data, map);
-};
 
-export {markersInit};
+export {createMainMarker, resetMainMarker, addAdvertisementsMarkers};

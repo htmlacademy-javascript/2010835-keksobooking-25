@@ -10,7 +10,7 @@ const typeFromEngToRusDictionary = {
 };
 
 const createPhotosFragment = (srcList, imgTemplate) => {
-  if(srcList.length <= 0){
+  if(!srcList || srcList.length <= 0){
     return null;
   }
 
@@ -26,7 +26,7 @@ const createPhotosFragment = (srcList, imgTemplate) => {
 };
 
 const createFeaturesFragment  = (features, featuresAvailable) => {
-  if(featuresAvailable.length <= 0){
+  if(!featuresAvailable || featuresAvailable.length <= 0){
     return null;
   }
 

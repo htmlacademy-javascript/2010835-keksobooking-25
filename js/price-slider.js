@@ -44,4 +44,8 @@ const initPriceSlider = (sliderConfigData) => {
   });
 };
 
-export {initPriceSlider};
+const priceSliderSetValue = (value) => {
+  priceSlider.noUiSlider.set(value);
+};
+
+export {initPriceSlider, priceSliderSetValue};

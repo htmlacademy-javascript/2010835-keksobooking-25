@@ -14,7 +14,6 @@ const typePriceDictionary = {
   palace: 10000,
 };
 
-
 const pristine = new Pristine(form, {
   classTo: 'ad-form__element',
   errorClass: 'ad-form__invalid',
@@ -24,6 +23,7 @@ const pristine = new Pristine(form, {
   errorTextClass: 'ad-form__error'
 });
 
+const validate = () => pristine.validate();
 
 //PRICE VALIDATION
 const validatePriceMinValue = (value) => {
@@ -60,16 +60,6 @@ timeOutSelector.addEventListener('change', () => {
   timeInSelector.selectedIndex = timeOutSelector.selectedIndex;
 });
 
-
-//FORM LISTENERS
-form.addEventListener('submit', (evt) => {
-  const isValid = pristine.validate();
-
-  if(!isValid){
-    evt.preventDefault();
-  }
-});
-
 roomNumberSelector.addEventListener('change', () => {
   pristine.validate();
 });
@@ -80,4 +70,5 @@ typeSelector.addEventListener('change', () => {
   pristine.validate();
 });
 
+export {validate};
 

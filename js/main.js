@@ -1,10 +1,22 @@
 import { adFormInit } from './ad-form.js';
-import { generateRandomAdvertisementsData } from './data.js';
-import { userControlOff, userControlOn } from './user-control-on-off-switcher.js';
-import { mapInit } from './map-creator.js';
+import { requestData } from './send-request-data.js';
+import { adFormDisable, filterFormDisable, adFormEnable, filterFormEnable } from './forms-enabler.js';
+import { createMap, resetMap, createAdMarkers } from './map.js';
 
-userControlOff();
 
-adFormInit();
+adFormDisable();
+filterFormDisable();
 
-mapInit(generateRandomAdvertisementsData(), userControlOn);
+adFormInit(resetMap);
+
+const onSuccess = (data) => {
+  filterFormEnable();
+  createAdMarkers(data);
+};
+
+createMap(() => {
+  adFormEnable();
+  requestData(onSuccess);
+});
+
+
