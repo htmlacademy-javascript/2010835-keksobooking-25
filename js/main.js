@@ -6,6 +6,8 @@ import { setFormFilterChanged, formFilterReset } from './form-filter.js';
 import { initDataStore } from './data-store.js';
 import { debounce } from './util.js';
 
+const RERENDER_DELAY = 500;
+
 //ДЕАКИТИВИРУЕМ ФОРМУ РЕГИСТРАЦИИ ОБЪЯВЛЕНИЯ И ФОРМУ ФИЛЬТРАЦИИ ДАННЫХ
 adFormDisable();
 filterFormDisable();
@@ -21,7 +23,7 @@ const onSuccess = (data) => {
   initDataStore(data);
   filterFormEnable();
   setFormFilterChanged(
-    debounce(() => renderAdMarkers(), 500)
+    debounce(() => renderAdMarkers(), RERENDER_DELAY)
   );
   renderAdMarkers();
 };
