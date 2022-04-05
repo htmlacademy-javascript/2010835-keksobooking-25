@@ -1,4 +1,4 @@
-import { createMainMarker, resetMainMarker, addAdvertisementsMarkers } from './marker-creator.js';
+import { createMainMarker, renderMainMarker, addAdvertisementsMarkers } from './marker-creator.js';
 import { INITIAL_LOCATION } from './global-constants.js';
 import { getData } from './data-store.js';
 import { filter } from './form-filter.js';
@@ -35,15 +35,15 @@ const createAdMarkers = () => {
   addAdvertisementsMarkers(markersLayer, data);
 };
 
-const resetAdMarkers = () => {
+const renderAdMarkers = () => {
   markersLayer.remove();
   markersLayer = L.layerGroup().addTo(map);
   createAdMarkers(markersLayer);
 };
 
 const resetMap = () => {
-  resetAdMarkers();
-  resetMainMarker();
+  renderAdMarkers();
+  renderMainMarker();
   map.setView({
     lat: INITIAL_LOCATION.lat,
     lng: INITIAL_LOCATION.lng,
@@ -56,4 +56,4 @@ const createMap = (onMapLoad) => {
 };
 
 
-export {createMap, resetMap, createAdMarkers, resetAdMarkers};
+export {createMap, resetMap, createAdMarkers, renderAdMarkers};

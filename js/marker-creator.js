@@ -46,7 +46,7 @@ const createMainMarker = (map) => {
   mainMarker.addTo(map);
 };
 
-const resetMainMarker = () => {
+const renderMainMarker = () => {
   mainMarker.setLatLng(
     {
       lat: INITIAL_LOCATION.lat,
@@ -83,4 +83,4 @@ const addAdvertisementsMarkers = (map, data) => {
 };
 
 
-export {createMainMarker, resetMainMarker, addAdvertisementsMarkers};
+export {createMainMarker, renderMainMarker, addAdvertisementsMarkers};

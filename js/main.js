@@ -1,9 +1,10 @@
 import { adFormInit } from './ad-form.js';
 import { requestData } from './send-request-data.js';
 import { adFormDisable, filterFormDisable, adFormEnable, filterFormEnable } from './forms-enabler.js';
-import { createMap, resetMap, createAdMarkers, resetAdMarkers } from './map.js';
-import { setOnFilterApply, formFilterReset } from './form-filter.js';
+import { createMap, resetMap, renderAdMarkers } from './map.js';
+import { setFormFilterChanged, formFilterReset } from './form-filter.js';
 import { initDataStore } from './data-store.js';
+import { debounce } from './util.js';
 
 //ДЕАКИТИВИРУЕМ ФОРМУ РЕГИСТРАЦИИ ОБЪЯВЛЕНИЯ И ФОРМУ ФИЛЬТРАЦИИ ДАННЫХ
 adFormDisable();
@@ -19,8 +20,10 @@ adFormInit(() => {
 const onSuccess = (data) => {
   initDataStore(data);
   filterFormEnable();
-  setOnFilterApply(resetAdMarkers);
-  createAdMarkers();
+  setFormFilterChanged(
+    debounce(() => renderAdMarkers(), 500)
+  );
+  renderAdMarkers();
 };
 
 //ИНИЦИАЛИЗИРУЕМ КАРТУ

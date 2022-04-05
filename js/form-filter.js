@@ -5,7 +5,7 @@ const housingRooms = formFilter.querySelector('#housing-rooms');
 const housingGuests = formFilter.querySelector('#housing-guests');
 const filterCheckboxes = formFilter.querySelectorAll('.map__checkbox');
 
-const filterPriceRanges = {
+const FILTER_PRICE_RANGE = {
   middle: {
     min: 10000,
     max: 50000,
@@ -20,14 +20,14 @@ const filterPriceRanges = {
   }
 };
 
-let _onFilterApply = null;
+let _formFilterChanged = null;
 
-const setOnFilterApply = (onFilterApply) => {
-  _onFilterApply = onFilterApply;
+const setFormFilterChanged = (formFilterChanged) => {
+  _formFilterChanged = formFilterChanged;
 };
 
-const filterApply = () => {
-  _onFilterApply();
+const onFormFilterChanged = () => {
+  _formFilterChanged();
 };
 
 const containSimilarFeature = (advertisement, inputValue) => {
@@ -44,7 +44,7 @@ const filter = (data) => {
   }
 
   if(housingPrice.value !== 'any'){
-    data = data.filter((element) => element.offer.price >= filterPriceRanges[housingPrice.value].min && element.offer.price < filterPriceRanges[housingPrice.value].max);
+    data = data.filter((element) => element.offer.price >= FILTER_PRICE_RANGE[housingPrice.value].min && element.offer.price < FILTER_PRICE_RANGE[housingPrice.value].max);
   }
 
   if(housingRooms.value !== 'any'){
@@ -69,6 +69,6 @@ const formFilterReset = () => {
   filterCheckboxes.forEach((element) => {element.checked = false;});
 };
 
-formFilter.addEventListener('change', filterApply);
+formFilter.addEventListener('change', onFormFilterChanged);
 
-export { setOnFilterApply, filter, formFilterReset };
+export { setFormFilterChanged, filter, formFilterReset };
