@@ -7,8 +7,6 @@ const MAIN_MARKER_ICON_HEIGHT = 52;
 const MAINMARKER_ICON_HEIGHT = 52;
 const MAX_DISPLAYED_COUNT = 10;
 
-let _data = null;
-
 //СОЗДАЁМ ИКОНКИ МАРКЕРОВ КАРТЫ
 const markerIcon = L.icon({
   iconUrl: 'img/pin.svg',
@@ -76,13 +74,11 @@ const addMarker = (location, map, popupTemplate) => {
 
 //ДОБАВЛЯЕМ МАРКЕРЫ НА КАРТУ
 const addAdvertisementsMarkers = (map, data) => {
-  if(_data === null){
-    _data = data;
-  }
-  if(_data){
-    for(let i = 0; i < MAX_DISPLAYED_COUNT; i++){
-      addMarker({lat: _data[i].location.lat, lng: _data[i].location.lng}, map, createRandomAdvertisementCard( _data[i]));
-    }
+  if(data){
+    data = data.slice(0, MAX_DISPLAYED_COUNT);
+    data.forEach((element) => {
+      addMarker({lat: element.location.lat, lng: element.location.lng}, map, createRandomAdvertisementCard(element));
+    });
   }
 };
 

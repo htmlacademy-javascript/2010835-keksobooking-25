@@ -1,7 +1,10 @@
 import { createMainMarker, resetMainMarker, addAdvertisementsMarkers } from './marker-creator.js';
 import { INITIAL_LOCATION } from './global-constants.js';
+import { getData } from './data-store.js';
+import { filter } from './form-filter.js';
 
 const ZOOM_LEVEL = 13;
+
 
 const map = L.map('map-canvas');
 
@@ -26,10 +29,20 @@ const initMap = (onMapLoad) => {
 
 let markersLayer = L.layerGroup().addTo(map);
 
-const resetMap = () => {
+const createAdMarkers = () => {
+  let data = getData();
+  data = filter(data);
+  addAdvertisementsMarkers(markersLayer, data);
+};
+
+const resetAdMarkers = () => {
   markersLayer.remove();
   markersLayer = L.layerGroup().addTo(map);
-  addAdvertisementsMarkers(markersLayer);
+  createAdMarkers(markersLayer);
+};
+
+const resetMap = () => {
+  resetAdMarkers();
   resetMainMarker();
   map.setView({
     lat: INITIAL_LOCATION.lat,
@@ -42,8 +55,5 @@ const createMap = (onMapLoad) => {
   createMainMarker(map);
 };
 
-const createAdMarkers = (data) => {
-  addAdvertisementsMarkers(markersLayer, data);
-};
 
-export {createMap, resetMap, createAdMarkers};
+export {createMap, resetMap, createAdMarkers, resetAdMarkers};
