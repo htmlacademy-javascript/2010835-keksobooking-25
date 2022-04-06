@@ -4,7 +4,7 @@ import { getData } from './data-store.js';
 import { filter } from './form-filter.js';
 
 const ZOOM_LEVEL = 13;
-
+const MAX_DISPLAYED_COUNT = 10;
 
 const map = L.map('map-canvas');
 
@@ -30,9 +30,15 @@ const initMap = (onMapLoad) => {
 let markersLayer = L.layerGroup().addTo(map);
 
 const createAdMarkers = () => {
-  let data = getData();
-  data = filter(data);
-  addAdvertisementsMarkers(markersLayer, data);
+  const advertisements = getData();
+  const advertisementsToShow = [];
+  for(let i = 0; i < advertisements.length && advertisementsToShow.length < MAX_DISPLAYED_COUNT; i++){
+    if(filter(advertisements[i])){
+      advertisementsToShow.push(advertisements[i]);
+    }
+  }
+
+  addAdvertisementsMarkers(markersLayer, advertisementsToShow);
 };
 
 const renderAdMarkers = () => {

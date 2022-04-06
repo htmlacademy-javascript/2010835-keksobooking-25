@@ -30,38 +30,59 @@ const onFormFilterChanged = () => {
   _formFilterChanged();
 };
 
-const containSimilarFeature = (advertisement, inputValue) => {
-  if(advertisement.offer.features){
-    return advertisement.offer.features.some((feature) => feature === inputValue);
+const containSimilarFeature = (advertisement, filterSelectedFeatures) => {
+  if(!advertisement.offer.features){
+    return false;
   }
 
-  return false;
+  for(let i = 0; i < filterSelectedFeatures.length; i++){
+    if(!advertisement.offer.features.includes(filterSelectedFeatures[i])){
+      return false;
+    }
+  }
+
+  return true;
 };
 
-const filter = (data) => {
-  if(housingType.value !== 'any'){
-    data = data.filter((element) => element.offer.type === housingType.value);
-  }
+const getSelectedCheckboxesValues = () => {
+  const checked = [];
 
-  if(housingPrice.value !== 'any'){
-    data = data.filter((element) => element.offer.price >= FILTER_PRICE_RANGE[housingPrice.value].min && element.offer.price < FILTER_PRICE_RANGE[housingPrice.value].max);
-  }
-
-  if(housingRooms.value !== 'any'){
-    data = data.filter((element) => element.offer.rooms === +housingRooms.value);
-  }
-
-  if(housingGuests.value !== 'any'){
-    data = data.filter((element) => element.offer.guests === +housingGuests.value);
-  }
-
-  filterCheckboxes.forEach((element) => {
-    if(element.checked === true){
-      data = data.filter((advertisement) => containSimilarFeature(advertisement, element.value));
+  filterCheckboxes.forEach((checkbox) => {
+    if(checkbox.checked === true){
+      checked.push(checkbox.value);
     }
   });
 
-  return data;
+  return checked;
+};
+
+const filter = (data) => {
+  let result = true;
+
+  if(housingType.value !== 'any'){
+    result = data.offer.type === housingType.value;
+  }
+
+  if(housingPrice.value !== 'any'){
+    result &= data.offer.price >= FILTER_PRICE_RANGE[housingPrice.value].min && data.offer.price < FILTER_PRICE_RANGE[housingPrice.value].max;
+  }
+
+  if(housingRooms.value !== 'any'){
+    result &= data.offer.rooms === +housingRooms.value;
+  }
+
+  if(housingGuests.value !== 'any'){
+    result &= data.offer.guests === +housingGuests.value;
+  }
+
+  const selectedCheckboxesValues = getSelectedCheckboxesValues();
+
+  if(selectedCheckboxesValues.length !== 0){
+    result &= containSimilarFeature(data, selectedCheckboxesValues);
+  }
+
+
+  return result;
 };
 
 const formFilterReset = () => {
@@ -72,3 +93,4 @@ const formFilterReset = () => {
 formFilter.addEventListener('change', onFormFilterChanged);
 
 export { setFormFilterChanged, filter, formFilterReset };
+

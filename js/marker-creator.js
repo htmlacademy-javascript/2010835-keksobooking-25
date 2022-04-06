@@ -5,7 +5,7 @@ const MARKER_ICON_WIDTH = 40;
 const MARKER_ICON_HEIGHT = 40;
 const MAIN_MARKER_ICON_HEIGHT = 52;
 const MAINMARKER_ICON_HEIGHT = 52;
-const MAX_DISPLAYED_COUNT = 10;
+
 
 //СОЗДАЁМ ИКОНКИ МАРКЕРОВ КАРТЫ
 const markerIcon = L.icon({
@@ -75,7 +75,6 @@ const addMarker = (location, map, popupTemplate) => {
 //ДОБАВЛЯЕМ МАРКЕРЫ НА КАРТУ
 const addAdvertisementsMarkers = (map, data) => {
   if(data){
-    data = data.slice(0, MAX_DISPLAYED_COUNT);
     data.forEach((element) => {
       addMarker({lat: element.location.lat, lng: element.location.lng}, map, createRandomAdvertisementCard(element));
     });
