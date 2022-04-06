@@ -5,6 +5,7 @@ import { createMap, resetMap, renderAdMarkers } from './map.js';
 import { setFormFilterChanged, formFilterReset } from './form-filter.js';
 import { initDataStore } from './data-store.js';
 import { debounce } from './util.js';
+import './image-previewer.js';
 
 const RERENDER_DELAY = 500;
 
