@@ -5,7 +5,7 @@ import { createMap, resetMap, renderAdMarkers } from './map.js';
 import { setFormFilterChanged, formFilterReset } from './form-filter.js';
 import { initDataStore } from './data-store.js';
 import { debounce } from './util.js';
-import './image-previewer.js';
+import { resetImages } from './image-previewer.js';
 
 const RERENDER_DELAY = 500;
 
@@ -17,6 +17,7 @@ filterFormDisable();
 adFormInit(() => {
   formFilterReset();
   resetMap();
+  resetImages();
 });
 
 //ОБРАБОТЧИК API ФУНКЦИИ ЗАПРОСА ДАННЫХ С СЕРВЕРА

@@ -1,4 +1,5 @@
 const FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
+const DEFAULT_AVATAR_URL = 'img/muffin-grey.svg';
 
 const avatarChooser = document.querySelector('.ad-form-header__input');
 const avatarPreviewer = document.querySelector('.ad-form-header__preview img');
@@ -27,4 +28,11 @@ housingChooser.addEventListener('change', () => {
     housingPreviewer.style.backgroundImage = `url(${URL.createObjectURL(file)})`;
   }
 });
+
+const resetImages = () => {
+  avatarPreviewer.src = DEFAULT_AVATAR_URL;
+  housingPreviewer.style.backgroundImage = '';
+};
+
+export { resetImages };
 
