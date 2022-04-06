@@ -5,9 +5,7 @@ const MARKER_ICON_WIDTH = 40;
 const MARKER_ICON_HEIGHT = 40;
 const MAIN_MARKER_ICON_HEIGHT = 52;
 const MAINMARKER_ICON_HEIGHT = 52;
-const MAX_DISPLAYED_COUNT = 10;
 
-let _data = null;
 
 //СОЗДАЁМ ИКОНКИ МАРКЕРОВ КАРТЫ
 const markerIcon = L.icon({
@@ -48,7 +46,7 @@ const createMainMarker = (map) => {
   mainMarker.addTo(map);
 };
 
-const resetMainMarker = () => {
+const renderMainMarker = () => {
   mainMarker.setLatLng(
     {
       lat: INITIAL_LOCATION.lat,
@@ -76,15 +74,12 @@ const addMarker = (location, map, popupTemplate) => {
 
 //ДОБАВЛЯЕМ МАРКЕРЫ НА КАРТУ
 const addAdvertisementsMarkers = (map, data) => {
-  if(_data === null){
-    _data = data;
-  }
-  if(_data){
-    for(let i = 0; i < MAX_DISPLAYED_COUNT; i++){
-      addMarker({lat: _data[i].location.lat, lng: _data[i].location.lng}, map, createRandomAdvertisementCard( _data[i]));
-    }
+  if(data){
+    data.forEach((element) => {
+      addMarker({lat: element.location.lat, lng: element.location.lng}, map, createRandomAdvertisementCard(element));
+    });
   }
 };
 
 
-export {createMainMarker, resetMainMarker, addAdvertisementsMarkers};
+export {createMainMarker, renderMainMarker, addAdvertisementsMarkers};
