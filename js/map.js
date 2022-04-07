@@ -31,14 +31,16 @@ let markersLayer = L.layerGroup().addTo(map);
 
 const createAdMarkers = () => {
   const advertisements = getData();
-  const advertisementsToShow = [];
-  for(let i = 0; i < advertisements.length && advertisementsToShow.length < MAX_DISPLAYED_COUNT; i++){
-    if(filter(advertisements[i])){
-      advertisementsToShow.push(advertisements[i]);
+  if(advertisements){
+    const advertisementsToShow = [];
+    for(let i = 0; i < advertisements.length && advertisementsToShow.length < MAX_DISPLAYED_COUNT; i++){
+      if(filter(advertisements[i])){
+        advertisementsToShow.push(advertisements[i]);
+      }
     }
-  }
 
-  addAdvertisementsMarkers(markersLayer, advertisementsToShow);
+    addAdvertisementsMarkers(markersLayer, advertisementsToShow);
+  }
 };
 
 const renderAdMarkers = () => {

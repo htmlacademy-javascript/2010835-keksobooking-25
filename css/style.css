@@ -1089,3 +1089,7 @@ input[type=number]::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
+
+.ad-form__photo{
+  background-size: 100% 100%;
+}
