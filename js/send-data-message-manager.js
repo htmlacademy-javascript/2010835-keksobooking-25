@@ -9,62 +9,70 @@ const errorMessageTemplate = document.querySelector('#error').content;
 const errorMessageBlock = errorMessageTemplate.querySelector('.error');
 const tryAgainButton = errorMessageBlock.querySelector('button');
 
-let _onSuccessMessageRemove = () => {};
-let _onErrorMessageRemove = () => {};
+//#region УПРАВЛЕНИЕ ЭКРАНОМ СООБЩЕНИЯ, ИНФОРМИРУЮЩЕМ О УСПЕШНОЙ ОТПРАВКЕ ДАННЫХ
+let onSuccessMessageRemove = () => {};
 
-const onSuccessScreenEscKeydown = (evt) => {
+
+const onSuccessScreenEscKeydown = (evt) => {                          //ОБРАБОТЧИК НАЖАТИЯ НА КЛАВИШУ ESC
   if(isEscapeKey(evt)){
     removeSuccessMessage();
   }
 };
 
-function onSuccessScreenAreaClick(){
+const onSuccessScreenAreaClick = () => {                              //ОБРАБОТЧИК НАЖАТИЯ НА КЛАВИШУ МЫШЫ В ПРОИЗВОЛЬНОМ МЕСТЕ ЭКРАНА
   removeSuccessMessage();
-}
+};
 
-function showSuccessMessage(onSuccessMessageRemove){
-  _onSuccessMessageRemove = onSuccessMessageRemove;
+const showSuccessMessage = (onSuccessMessageRemoveCallback) => {      //ПОКАЗАТЬ ЭКРАН С СООБЩЕНИЕМ ОБ УСПЕШНОЙ ОТПРАВКЕ ДАННЫХ (ФУНКЦИЯ ПРЕДСТАВЛЯЮЩАЯ ИНТЕРФЕЙС МОДУЛЯ)
+  onSuccessMessageRemove = onSuccessMessageRemoveCallback;
   body.insertAdjacentElement('beforeend', successMessageBlock);
   body.addEventListener('keydown', onSuccessScreenEscKeydown);
   body.addEventListener('mousedown', onSuccessScreenAreaClick);
-}
+};
 
-function removeSuccessMessage(){
+function removeSuccessMessage(){                                      //СКРЫТЬ ЭКРАН С СООБЩЕНИЕМ ОБ УСПЕШНОЙ ОТПРАВКЕ ДАННЫХ
   body.removeEventListener('keydown', onSuccessScreenEscKeydown);
   body.removeEventListener('mousedown', onSuccessScreenAreaClick);
   body.removeChild(successMessageBlock);
-  _onSuccessMessageRemove();
+  onSuccessMessageRemove();
 }
+//#endregion
 
-function onErrorScreenAreaClick(){
+
+//#region УПРАВЛЕНИЕ ЭКРАНОМ СООБЩЕНИЯ, ИНФОРМИРУЮЩЕМ О ВОЗНИКНОВЕНИИ ОШИБКИ ПРИ ОТПРАВКЕ ДАННЫХ
+let onErrorMessageRemove = () => {};
+
+
+const onErrorScreenAreaClick = () => {                                  //ОБРАБОТЧИК НАЖАТИЯ НА КЛАВИШУ МЫШЫ В ПРОИЗВОЛЬНОМ МЕСТЕ ЭКРАНА
   removeErrorMessage();
-}
+};
 
-function onTryAgainButtonClick(){
+const onTryAgainButtonClick = () => {                                   //ОБРАБОТЧИК НАЖАТИЯ НА КЛАВИШУ ПОПРОБОВАТЬ СНОВА
   removeErrorMessage();
-}
+};
 
-function onErrorScreenEscKeydown(evt){
+const onErrorScreenEscKeydown = (evt) => {                              //ОБРАБОТЧИК НАЖАТИЯ НА КЛАВИШУ ESC
   if(isEscapeKey(evt)){
     removeErrorMessage();
   }
-}
+};
 
-function removeErrorMessage(){
+function removeErrorMessage(){                                          //СКРЫТЬ ЭКРАН С СООБЩЕНИЕМ О ВОЗНИКНОВЕНИИ ОШИБКИ ПРИ ОТПРАВКЕ ДАННЫХ
   body.removeChild(errorMessageBlock);
   body.removeEventListener('mousedown', onErrorScreenAreaClick);
   tryAgainButton.addEventListener('click', onTryAgainButtonClick);
   document.addEventListener('click', onErrorScreenEscKeydown);
-  _onErrorMessageRemove();
+  onErrorMessageRemove();
 }
 
-function showErrorMessage(onErrorMessageRemove){
-  _onErrorMessageRemove = onErrorMessageRemove;
+const showErrorMessage = (onErrorMessageRemoveCallback) => {            //ПОКАЗАТЬ ЭКРАН С СООБЩЕНИЕМ О ВОЗНИКНОВЕНИИ ОШИБКИ ПРИ ОТПРАВКЕ ДАННЫХ (ФУНКЦИЯ ПРЕДСТАВЛЯЮЩАЯ ИНТЕРФЕЙС МОДУЛЯ)
+  onErrorMessageRemove = onErrorMessageRemoveCallback;
   body.addEventListener('mousedown', onErrorScreenAreaClick);
   tryAgainButton.addEventListener('click', onTryAgainButtonClick);
   document.addEventListener('keydown', onErrorScreenEscKeydown);
   body.insertAdjacentElement('beforeend', errorMessageBlock);
-}
+};
+//#endregion
 
 
 export {showSuccessMessage, showErrorMessage};

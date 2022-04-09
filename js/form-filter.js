@@ -20,14 +20,14 @@ const FILTER_PRICE_RANGE = {
   }
 };
 
-let _formFilterChanged = null;
+let formFilterChange = null;
 
-const setFormFilterChanged = (formFilterChanged) => {
-  _formFilterChanged = formFilterChanged;
+const setFormFilterChanged = (formFilterChangeCallback) => {
+  formFilterChange = formFilterChangeCallback;
 };
 
-const onFormFilterChanged = () => {
-  _formFilterChanged();
+const onFormFilterChange = () => {
+  formFilterChange();
 };
 
 const containSimilarFeature = (advertisement, filterSelectedFeatures) => {
@@ -45,15 +45,15 @@ const containSimilarFeature = (advertisement, filterSelectedFeatures) => {
 };
 
 const getSelectedCheckboxesValues = () => {
-  const checked = [];
+  const checkedCheckboxes = [];
 
   filterCheckboxes.forEach((checkbox) => {
     if(checkbox.checked === true){
-      checked.push(checkbox.value);
+      checkedCheckboxes.push(checkbox.value);
     }
   });
 
-  return checked;
+  return checkedCheckboxes;
 };
 
 const filter = (data) => {
@@ -90,7 +90,7 @@ const formFilterReset = () => {
   filterCheckboxes.forEach((element) => {element.checked = false;});
 };
 
-formFilter.addEventListener('change', onFormFilterChanged);
+formFilter.addEventListener('change', onFormFilterChange);
 
 export { setFormFilterChanged, filter, formFilterReset };
 

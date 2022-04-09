@@ -14,15 +14,15 @@ const createPhotosFragment = (srcList, imgTemplate) => {
     return null;
   }
 
-  const _popupPhotosFragment = document.createDocumentFragment();
+  const popupPhotosFragment = document.createDocumentFragment();
 
   srcList.forEach((src) => {
     const imgElement = imgTemplate.cloneNode(true);
     imgElement.src = src;
-    _popupPhotosFragment.append(imgElement);
+    popupPhotosFragment.append(imgElement);
   });
 
-  return _popupPhotosFragment;
+  return popupPhotosFragment;
 };
 
 const createFeaturesFragment  = (features, featuresAvailable) => {
