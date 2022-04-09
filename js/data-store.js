@@ -1,9 +1,9 @@
-let _data = null;
+let data = null;
 
-const initDataStore = (data) => {
-  _data = data;
+const initDataStore = (requestedData) => {
+  data = requestedData;
 };
 
-const getData = () => _data;
+const getData = () => data;
 
 export {initDataStore, getData};

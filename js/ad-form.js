@@ -1,7 +1,7 @@
-import {validate} from './ad-form-validator.js';
-import {initPriceSlider, priceSliderSetValue} from './price-slider.js';
-import {INITIAL_LOCATION} from './global-constants.js';
-import {sendData} from './send-request-data.js';
+import { validate } from './ad-form-validator.js';
+import { initPriceSlider, priceSliderSetValue } from './price-slider.js';
+import { INITIAL_LOCATION } from './global-constants.js';
+import { sendData } from './send-request-data.js';
 import { showSuccessMessage, showErrorMessage } from './send-data-message-manager.js';
 
 const ADDRESS_INPUT_DEFAULT_VALUE = `${INITIAL_LOCATION.lat}, ${INITIAL_LOCATION.lng}`;
@@ -16,15 +16,15 @@ const adFormResetButton = form.querySelector('.ad-form__reset');
 //#endregion
 
 //ФУНКЦИЯ ОБРАТНОГО ВЫЗОВА ОТПРАВКИ ДАННЫХ ФОРМЫ
-let _onFormReset = null;
+let onFormReset = null;
 
 //ИНИЦИАЛИЗАЦИЯ ФОРМЫ ОБЪЯВЛЕНИЯ
-const adFormInit = (onFormReset) => {
-  if(!onFormReset){
-    throw 'Не задана функция обратного вызова onFormReset';
+const adFormInit = (onFormResetCallback) => {
+  if(!onFormResetCallback){
+    throw new Error('Данные полученные с сервера не валидны');
   }
 
-  _onFormReset = onFormReset;
+  onFormReset = onFormResetCallback;
 
   initPriceSlider({
     inputField: priceInput,
@@ -38,7 +38,7 @@ const resetAdFormData = () => {
   form.reset();
   addressInput.value = ADDRESS_INPUT_DEFAULT_VALUE;
   priceSliderSetValue(priceInput.value);
-  _onFormReset();
+  onFormReset();
 };
 
 const disableSubmitButton = () => {
@@ -62,7 +62,7 @@ form.addEventListener('submit', (evt) => {
         showSuccessMessage(enableSubmitButton);
         disableSubmitButton();
         resetAdFormData();
-        _onFormReset();
+        onFormReset();
       },
       () => {
         showErrorMessage(enableSubmitButton);
